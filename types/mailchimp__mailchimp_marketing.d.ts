@@ -15,6 +15,21 @@ declare module "@mailchimp/mailchimp_marketing" {
   }
 
   interface ListsApi {
+    updateListMemberTags(
+      arg0: string,
+      subscriberHash: string,
+      arg2: { tags: { name: string; status: string }[] }
+    ): unknown;
+    setListMember(
+      listId: string,
+      subscriberHash: string,
+      arg2: {
+        email_address: any;
+        status_if_new: string;
+        status: string;
+        merge_fields: { FNAME: any; LNAME: any; PHONE: any };
+      }
+    ): unknown;
     addListMember(listId: string, params: AddListMemberParams): Promise<any>;
   }
 
