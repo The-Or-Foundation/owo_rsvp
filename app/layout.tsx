@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Show Up Show Out | OWO 2025",
   description:
-    "OWO: Show up and Show out for Ghana's Largest celebration of Upcycling and Reuse",
+    "Show up and Show out for Ghana's Largest celebration of Upcycling and Reuse",
   icons: {
     icon: "/owo-icon.png",
   },
