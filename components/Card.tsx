@@ -115,16 +115,17 @@ export default function RSVPCard() {
         <div
           className={
             isMobile
-              ? "absolute -top-6 left-1/2 transform -translate-x-1/2 w-[180px] h-[100px]"
-              : "absolute -top-12 left-1/2 transform -translate-x-1/2 w-[350px] h-[250px]"
+              ? "absolute -top-6 left-1/2 transform -translate-x-1/2 w-[180px] h-[100px] pointer-events-none"
+              : "absolute -top-12 left-1/2 transform -translate-x-1/2 w-[350px] h-[250px] pointer-events-none"
           }
         >
           <Image
             src="/owo_logo.gif"
             alt="OWO Festival Logo"
             width={isMobile ? 180 : 350}
-            height={isMobile ? 100 : 250}
+            height={isMobile ? 100 : 230}
             priority
+            className="pointer-events-none"
           />
         </div>
 
