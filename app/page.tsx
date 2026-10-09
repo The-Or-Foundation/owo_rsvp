@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import SplashScreen from "@/components/SplashScreen";
 import HeroReveal from "@/components/HeroReveal";
+import StickyTicket from "@/components/StickyTicket";
 import { Archivo_Black, Rubik } from "next/font/google";
 
 const rubik = Rubik({
@@ -107,6 +108,7 @@ export default function Landing() {
   return (
     <main className="min-h-[100svh] w-full bg-white">
       <SplashScreen />
+      <StickyTicket href={TICKETS_URL} />
 
       {/* Hero poster: everything is sized in vw so it keeps the design's proportions */}
       <HeroReveal className="relative w-full overflow-hidden bg-[#F5473A] bg-[url(/owo_landing_bg.png)] bg-[length:100%_100%] bg-no-repeat">
@@ -177,6 +179,24 @@ export default function Landing() {
               sizes="(max-aspect-ratio: 4/5) 150vw, 70vw"
               className="intro-model absolute wide:left-[calc(50%-34cqw)] wide:top-[32.7cqw] wide:w-[69cqw] tall:left-[calc(50%-79cqw)] tall:top-[calc(var(--tt)_+_12.6cqw)] tall:w-[160cqw] tall:max-w-none h-auto pointer-events-none select-none"
             />
+
+            {/* Teaser shown while the poster holds, so people know the
+                location reveal is coming; the line fills until it plays.
+                Beside her hair on wide screens, over her jacket on tall ones. */}
+            <div
+              aria-hidden="true"
+              className="lx-hint absolute wide:left-[calc(50%+17cqw)] wide:top-[43cqw] wide:w-[24cqw] tall:left-1/2 tall:-translate-x-1/2 tall:bottom-[22cqw] tall:w-[56cqw] flex flex-col items-center text-[#0B0B0B] font-['Helvetica_Neue',Helvetica,Arial,sans-serif] leading-none uppercase pointer-events-none"
+            >
+              <span className="inline-block -rotate-[1.5deg] bg-[#63DE9F] wide:px-[0.8cqw] wide:py-[0.25cqw] wide:text-[1.5cqw] tall:px-[1.6cqw] tall:py-[0.5cqw] tall:text-[3.4cqw]">
+                Revealing the
+              </span>
+              <span className="-mt-[0.2cqw] inline-block -rotate-[2deg] bg-[#63DE9F] wide:px-[1cqw] wide:py-[0.35cqw] wide:text-[2.8cqw] tall:px-[2cqw] tall:py-[0.7cqw] tall:text-[6.2cqw] font-bold italic">
+                New Location
+              </span>
+              <span className="relative block w-full overflow-hidden rounded-full bg-white/50 wide:mt-[1.2cqw] wide:h-[0.45cqw] tall:mt-[2.6cqw] tall:h-[1cqw]">
+                <span className="lx-hint-fill absolute inset-0 origin-left rounded-full bg-[#111418]" />
+              </span>
+            </div>
           </div>
 
           {/* Slide B: new location and tickets, revealed once by a light transition (lx-* in globals.css) */}
@@ -213,9 +233,9 @@ export default function Landing() {
               href={TICKETS_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="lx-cta absolute left-1/2 wide:top-[50.9cqw] wide:w-[37.5cqw] wide:h-[4.9cqw] wide:rounded-[1cqw] tall:top-[calc(var(--bt)_+_73cqw)] tall:w-[88cqw] tall:h-[14cqw] tall:rounded-[3cqw] -translate-x-1/2 flex items-center justify-center border border-[#E9C3A8] bg-white font-['Avenir_Next',Avenir,'Helvetica_Neue',Helvetica,Arial,sans-serif] font-semibold wide:text-[2.4cqw] tall:text-[6cqw] text-[#E07B36] transition-colors duration-200 hover:border-[#63DE9F] hover:bg-[#63DE9F] hover:text-white active:border-[#63DE9F] active:bg-[#63DE9F] active:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+              className="lx-cta absolute left-1/2 wide:top-[50.9cqw] wide:w-[37.5cqw] wide:h-[4.9cqw] wide:rounded-[1cqw] tall:top-[calc(var(--bt)_+_73cqw)] tall:w-[88cqw] tall:h-[14cqw] tall:rounded-[3cqw] -translate-x-1/2 flex items-center justify-center whitespace-nowrap border border-[#E9C3A8] bg-white font-['Avenir_Next',Avenir,'Helvetica_Neue',Helvetica,Arial,sans-serif] font-semibold wide:text-[2.4cqw] tall:text-[6cqw] text-[#E07B36] transition-colors duration-200 hover:border-[#63DE9F] hover:bg-[#63DE9F] hover:text-white active:border-[#63DE9F] active:bg-[#63DE9F] active:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
             >
-              Buy Ticket
+              Secure Your Tickets
             </a>
 
             <p
