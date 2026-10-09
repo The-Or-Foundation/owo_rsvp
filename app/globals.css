@@ -120,3 +120,489 @@
     @apply bg-background text-foreground;
   }
 }
+
+/*
+ * Landing page intro. Sizes are in cqw so they follow the hero stage (and
+ * fall back to the viewport outside it). Elements start hidden and play in once the splash
+ * screen starts leaving, which sets <html data-intro="play">.
+ * The chrome OWO pops in at the top where the "20 OWO 26" logo sits, holds,
+ * then drops to the bottom while the logo appears in its place, the model
+ * rises and the stars come in.
+ */
+.intro-title,
+.intro-owo,
+.intro-model,
+.intro-logo,
+.intro-star-left,
+.intro-star-right,
+.intro-rest {
+  opacity: 0;
+}
+
+html[data-intro="play"] .intro-title {
+  animation: intro-rise 700ms cubic-bezier(0.22, 1, 0.36, 1) 150ms both;
+}
+html[data-intro="play"] .intro-owo {
+  transform-origin: center;
+  animation: intro-owo 2000ms linear 400ms both;
+}
+html[data-intro="play"] .intro-model {
+  animation: intro-model 800ms cubic-bezier(0.22, 1, 0.36, 1) 1700ms both;
+}
+html[data-intro="play"] .intro-logo {
+  animation: intro-logo 700ms cubic-bezier(0.34, 1.56, 0.64, 1) 1550ms both;
+}
+html[data-intro="play"] .intro-star-left {
+  animation: intro-star-left 700ms cubic-bezier(0.22, 1, 0.36, 1) 2100ms both;
+}
+html[data-intro="play"] .intro-star-right {
+  animation: intro-star-right 700ms cubic-bezier(0.22, 1, 0.36, 1) 2100ms both;
+}
+html[data-intro="play"] .intro-rest {
+  animation: intro-rise 800ms cubic-bezier(0.22, 1, 0.36, 1) 2300ms both;
+}
+
+@keyframes intro-rise {
+  from {
+    opacity: 0;
+    transform: translateY(3cqw);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Starts at the top, in the spot the "20 OWO 26" logo will take (scale 0.49
+   matches the logo's width), then drops 65cqw down past the title and grows
+   into its resting place at the bottom. The logo appears as it leaves. */
+@keyframes intro-owo {
+  0% {
+    opacity: 0;
+    transform: translateY(-65cqw) scale(0.35) rotate(-6deg);
+    animation-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  20% {
+    opacity: 1;
+    transform: translateY(-65cqw) scale(0.49) rotate(-3deg);
+    animation-timing-function: ease-in-out;
+  }
+  35% {
+    transform: translateY(-65cqw) scale(0.49) rotate(2deg);
+    animation-timing-function: ease-in-out;
+  }
+  48%,
+  55% {
+    opacity: 1;
+    transform: translateY(-65cqw) scale(0.49) rotate(0deg);
+    animation-timing-function: cubic-bezier(0.7, 0, 0.2, 1);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes intro-model {
+  from {
+    opacity: 0;
+    transform: translateY(25cqw);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes intro-logo {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes intro-star-left {
+  from {
+    opacity: 0;
+    transform: translate(-100%, -100%);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes intro-star-right {
+  from {
+    opacity: 0;
+    transform: translate(100%, -100%);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-intro="play"] .intro-title,
+  html[data-intro="play"] .intro-owo,
+  html[data-intro="play"] .intro-model,
+  html[data-intro="play"] .intro-logo,
+  html[data-intro="play"] .intro-star-left,
+  html[data-intro="play"] .intro-star-right,
+  html[data-intro="play"] .intro-rest {
+    animation: none;
+    opacity: 1;
+  }
+}
+
+/* Activity card icons give a little shake when hovered */
+.activity-icon {
+  transform-origin: 50% 85%;
+}
+@media (hover: hover) {
+  .activity-icon:hover {
+    animation: icon-shake 500ms ease-in-out;
+  }
+}
+@keyframes icon-shake {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  20% {
+    transform: rotate(-8deg);
+  }
+  40% {
+    transform: rotate(7deg);
+  }
+  60% {
+    transform: rotate(-5deg);
+  }
+  80% {
+    transform: rotate(3deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .activity-icon:hover {
+    animation: none;
+  }
+}
+
+/*
+ * Landing hero: HeroReveal flips data-slide from "a" (Bazaar poster) to "b"
+ * once, and slide B then stays. The switch follows the OWO reel:
+ *   0–420ms     the poster glitches into white striped silhouettes and cuts out
+ *   420–700ms   a green blade carrying "New Location" snaps in from the right
+ *   680–1000ms  cyan light floods in around a V of background from the top
+ *   980–1300ms  a yellow cone shoots in from the left edge, with a faint ray
+ *   1280–1450ms the light collapses to a small green bar where the title lands
+ *   1400ms on   the text pops in with a green glow, then a green sweep
+ * All times are from the moment data-slide becomes "b".
+ */
+.hero-slide-a {
+  transition:
+    opacity 350ms ease,
+    transform 450ms cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0s linear 0s;
+}
+[data-slide="b"] .hero-slide-a {
+  opacity: 0;
+  visibility: hidden;
+  transition: visibility 0s linear 420ms;
+  animation: lx-hatch 420ms linear both;
+}
+/* Keeps the Buy Ticket link out of reach until it's showing */
+[data-slide="a"] .hero-slide-b {
+  visibility: hidden;
+}
+.hero-slide-b > * {
+  opacity: 0;
+  pointer-events: none;
+}
+.hero-slide-b > .lx-cta {
+  pointer-events: auto;
+}
+/* The heading itself just shows; its two words animate in on their own */
+[data-slide="b"] .hero-slide-b > .lx-title {
+  opacity: 1;
+}
+
+[data-slide="b"] .lx-blade {
+  clip-path: polygon(0 48%, 100% 0, 100% 100%, 0 100%);
+  background: #2fe0a0;
+  animation: lx-blade 300ms cubic-bezier(0.16, 1, 0.3, 1) 420ms forwards;
+}
+[data-slide="b"] .lx-cyan {
+  background: linear-gradient(
+    to bottom,
+    #4ff7ec 0%,
+    #4ff7ec 58%,
+    rgba(79, 247, 236, 0.7) 74%,
+    rgba(79, 247, 236, 0) 94%
+  );
+  clip-path: polygon(0 0, 28% 0, 50% 62%, 72% 0, 100% 0, 100% 100%, 0 100%);
+  filter: blur(0.9cqw);
+  animation: lx-cyan 340ms ease-out 680ms forwards;
+}
+[data-slide="b"] .lx-warm {
+  background: rgba(255, 176, 92, 0.38);
+  animation: lx-flick 340ms linear 980ms forwards;
+}
+[data-slide="b"] .lx-ray {
+  clip-path: polygon(0 0, 22% 0, 100% 100%, 92% 100%);
+  background: linear-gradient(
+    to bottom right,
+    rgba(150, 50, 20, 0),
+    rgba(150, 50, 20, 0.35)
+  );
+  animation: lx-flick 340ms linear 980ms forwards;
+}
+[data-slide="b"] .lx-cone {
+  transform-origin: left center;
+  clip-path: polygon(0 0, 100% 46%, 100% 54%, 0 100%);
+  background: linear-gradient(90deg, #fff27a, #ffe455 70%, #ffd23e);
+  filter: blur(0.25cqw);
+  animation: lx-cone 340ms cubic-bezier(0.16, 1, 0.3, 1) 980ms forwards;
+}
+[data-slide="b"] .lx-bar {
+  transform-origin: center;
+  clip-path: polygon(2% 0, 86% 0, 100% 100%, 0 100%);
+  background: linear-gradient(90deg, #2fe0a0 0 82%, #f2a04a 82%);
+  filter: drop-shadow(0 0 1cqw #63de9f);
+  animation: lx-bar 220ms ease-out 1260ms forwards;
+}
+
+[data-slide="b"] .lx-tag {
+  animation: lx-tag 450ms cubic-bezier(0.34, 1.56, 0.64, 1) 1600ms both;
+}
+[data-slide="b"] .lx-pill,
+[data-slide="b"] .lx-cta {
+  animation: lx-rise 600ms cubic-bezier(0.22, 1, 0.36, 1) 1950ms both;
+}
+[data-slide="b"] .lx-cta {
+  animation-delay: 2050ms;
+}
+
+/* UNTAMED and EMPIRE pop in with a green glow, then a green highlight
+   band slides through the white text once */
+.lx-sweep {
+  color: transparent;
+  background-image: linear-gradient(
+    100deg,
+    #fff 44%,
+    #63de9f 47%,
+    #63de9f 53%,
+    #fff 56%
+  );
+  background-size: 300% 100%;
+  background-position: 100% 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+[data-slide="b"] .lx-untamed.lx-sweep {
+  animation:
+    lx-pop 450ms cubic-bezier(0.34, 1.56, 0.64, 1) 1400ms both,
+    lx-glow 900ms ease-out 1400ms both,
+    lx-sweep 1100ms ease-in-out 2350ms both;
+}
+[data-slide="b"] .lx-empire.lx-sweep {
+  animation:
+    lx-pop 450ms cubic-bezier(0.34, 1.56, 0.64, 1) 1700ms both,
+    lx-glow 900ms ease-out 1700ms both,
+    lx-sweep 1100ms ease-in-out 2550ms both;
+}
+
+/* White silhouettes hatched with thin diagonal lines, flickering with the
+   real poster twice before cutting out. Non-animatable values like
+   mask-image switch between neighbouring keyframes, so each state is held
+   by a pair of stops. */
+@keyframes lx-hatch {
+  0%,
+  14% {
+    opacity: 1;
+    filter: none;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+  15%,
+  38% {
+    opacity: 1;
+    filter: brightness(0) invert(1);
+    -webkit-mask-image: repeating-linear-gradient(
+      115deg,
+      #000 0 0.26cqw,
+      transparent 0.26cqw 0.6cqw
+    );
+    mask-image: repeating-linear-gradient(
+      115deg,
+      #000 0 0.26cqw,
+      transparent 0.26cqw 0.6cqw
+    );
+  }
+  39%,
+  56% {
+    opacity: 1;
+    filter: none;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+  57%,
+  99% {
+    opacity: 1;
+    filter: brightness(0) invert(1);
+    -webkit-mask-image: repeating-linear-gradient(
+      115deg,
+      #000 0 0.26cqw,
+      transparent 0.26cqw 0.6cqw
+    );
+    mask-image: repeating-linear-gradient(
+      115deg,
+      #000 0 0.26cqw,
+      transparent 0.26cqw 0.6cqw
+    );
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes lx-blade {
+  0% {
+    opacity: 1;
+    transform: translateX(100%);
+  }
+  40%,
+  95% {
+    opacity: 1;
+    transform: none;
+  }
+  100% {
+    opacity: 0;
+    transform: none;
+  }
+}
+@keyframes lx-cyan {
+  0% {
+    opacity: 0;
+  }
+  25%,
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes lx-flick {
+  0%,
+  95% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes lx-cone {
+  0% {
+    opacity: 1;
+    transform: scaleX(0.15);
+  }
+  35%,
+  92% {
+    opacity: 1;
+    transform: none;
+  }
+  100% {
+    opacity: 0;
+    transform: none;
+  }
+}
+@keyframes lx-bar {
+  0% {
+    opacity: 1;
+    transform: scaleX(1.6);
+  }
+  60% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scaleX(0.9);
+  }
+}
+@keyframes lx-pop {
+  from {
+    opacity: 0;
+    transform: scale(1.12);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes lx-glow {
+  from {
+    filter: drop-shadow(0 0 1.2cqw #63de9f) drop-shadow(0 0.4cqw 0.6cqw #63de9f);
+  }
+  to {
+    filter: drop-shadow(0 0 0 rgba(99, 222, 159, 0));
+  }
+}
+@keyframes lx-tag {
+  from {
+    opacity: 0;
+    transform: scale(1.4) rotate(-6deg);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes lx-rise {
+  from {
+    opacity: 0;
+    transform: translateY(4cqw);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes lx-sweep {
+  from {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: 0% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lx-blade,
+  .lx-cyan,
+  .lx-warm,
+  .lx-ray,
+  .lx-cone,
+  .lx-bar {
+    display: none;
+  }
+  [data-slide="b"] .hero-slide-a {
+    animation: none;
+  }
+  [data-slide="b"] .hero-slide-b > * {
+    animation: lx-fade 400ms ease both !important;
+  }
+}
+@keyframes lx-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
