@@ -2,8 +2,8 @@
 
 import { useEffect, useState, type ReactNode } from "react";
 
-// The intro takes about 3s, then the Bazaar poster holds before the reveal
-const REVEAL_AFTER_MS = 6500;
+// The intro takes about 3s, then the Bazaar poster holds briefly before the reveal
+const REVEAL_AFTER_MS = 4500;
 
 /**
  * Shows the Bazaar poster (slide "a"), then once, a few seconds after the
