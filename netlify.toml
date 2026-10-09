@@ -1,14 +1,18 @@
-# Send everything on owofest.org (and www, which already forwards here) to
-# the OWO ticket page. 302 so browsers don't remember it if the site returns.
-# oworsvp.netlify.app is not matched and still shows the site.
-[[redirects]]
-  from = "https://owofest.org/*"
-  to = "https://tix.africa/discover/owo"
-  status = 302
-  force = true
-
-[[redirects]]
-  from = "http://owofest.org/*"
-  to = "https://tix.africa/discover/owo"
-  status = 302
-  force = true
+# owofest.org now shows the site's home page (the OWO 2026 landing page);
+# the Buy Ticket button links to tix.africa instead. The old redirect is
+# kept below, commented out, in case it's needed again.
+#
+# # Send everything on owofest.org (and www, which already forwards here) to
+# # the OWO ticket page. 302 so browsers don't remember it if the site returns.
+# # oworsvp.netlify.app is not matched and still shows the site.
+# [[redirects]]
+#   from = "https://owofest.org/*"
+#   to = "https://tix.africa/discover/owo"
+#   status = 302
+#   force = true
+#
+# [[redirects]]
+#   from = "http://owofest.org/*"
+#   to = "https://tix.africa/discover/owo"
+#   status = 302
+#   force = true
