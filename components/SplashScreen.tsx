@@ -113,7 +113,7 @@ export default function SplashScreen() {
         </p>
 
         <p className="absolute left-5 sm:left-10 bottom-6 sm:bottom-10 max-w-[14rem] sm:max-w-xs text-xs sm:text-base leading-tight">
-          Ghana&apos;s largest celebration of upcycling and reuse.
+          Ghana&apos;s largest celebration of upcycling.
         </p>
 
         <Image

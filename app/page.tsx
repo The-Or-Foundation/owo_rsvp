@@ -52,7 +52,7 @@ const ACTIVITIES = [
       width: 900,
       height: 861,
       left: 50.6,
-      bottom: 17,
+      bottom: -2,
       size: 21.9,
     },
   },
@@ -100,7 +100,7 @@ const CARD_ORANGE = "bg-[linear-gradient(90deg,#EC6A2C,#F28A2E)]";
 export const metadata: Metadata = {
   title: "The Upcycling Bazaar | OWO Festival",
   description:
-    "Show up and Show out for Ghana's Largest celebration of Upcycling and Reuse",
+    "Show up and Show out for Ghana's Largest celebration of Upcycling",
 };
 
 export default function Landing() {
@@ -213,7 +213,7 @@ export default function Landing() {
               href={TICKETS_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="lx-cta absolute left-1/2 wide:top-[50.9cqw] wide:w-[37.5cqw] wide:h-[4.9cqw] wide:rounded-[1cqw] tall:top-[calc(var(--bt)_+_73cqw)] tall:w-[88cqw] tall:h-[14cqw] tall:rounded-[3cqw] -translate-x-1/2 flex items-center justify-center border border-[#E9C3A8] bg-white font-['Avenir_Next',Avenir,'Helvetica_Neue',Helvetica,Arial,sans-serif] font-semibold wide:text-[2.4cqw] tall:text-[6cqw] text-[#E07B36] transition-colors duration-200 hover:bg-[#FFF3EA] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+              className="lx-cta absolute left-1/2 wide:top-[50.9cqw] wide:w-[37.5cqw] wide:h-[4.9cqw] wide:rounded-[1cqw] tall:top-[calc(var(--bt)_+_73cqw)] tall:w-[88cqw] tall:h-[14cqw] tall:rounded-[3cqw] -translate-x-1/2 flex items-center justify-center border border-[#E9C3A8] bg-white font-['Avenir_Next',Avenir,'Helvetica_Neue',Helvetica,Arial,sans-serif] font-semibold wide:text-[2.4cqw] tall:text-[6cqw] text-[#E07B36] transition-colors duration-200 hover:border-[#63DE9F] hover:bg-[#63DE9F] hover:text-white active:border-[#63DE9F] active:bg-[#63DE9F] active:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
             >
               Buy Ticket
             </a>
