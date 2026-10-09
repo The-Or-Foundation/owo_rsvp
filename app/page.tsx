@@ -110,12 +110,16 @@ export default function Landing() {
 
       {/* Hero poster: everything is sized in vw so it keeps the design's proportions */}
       <HeroReveal className="relative w-full overflow-hidden bg-[#F5473A] bg-[url(/owo_landing_bg.png)] bg-[length:100%_100%] bg-no-repeat">
-        {/* Stage: sized to fit both the screen's width and height (100:71), so
-            the whole poster shows without scrolling on laptops. Everything
-            inside is measured in cqw (1% of the stage's width). It isn't
-            positioned, so absolute children still use the full-width section
-            and the stars stay in the screen corners. */}
-        <div className="mx-auto w-[min(100%,140.85svh)] aspect-[100/71] [container-type:inline-size]">
+        {/* Stage: everything inside is measured in cqw (1% of the stage's
+            width). There are two layouts, picked by screen shape:
+            - wide (laptops, landscape): a 100:71 poster sized to fit both the
+              screen's width and height, so it shows without scrolling. The
+              stage isn't positioned, so absolute children use the full-width
+              section and the stars stay in the screen corners.
+            - tall (phones, portrait tablets): the stage fills the screen
+              (100svh) and the content is stacked bigger. --tt is where the
+              Bazaar title sits and --bt where the location block starts. */}
+        <div className="mx-auto w-[min(100%,140.85svh)] aspect-[100/71] [container-type:inline-size] tall:relative tall:h-[100svh] tall:aspect-auto tall:[--tt:max(calc(100%_-_140cqw),calc(9%_+_23cqw))] tall:[--bt:max(calc(54.5%_-_41cqw),calc(9%_+_21cqw))]">
           {/* Chrome star, top-left corner */}
           <Image
             src="/owo_wooo.png"
@@ -123,8 +127,8 @@ export default function Landing() {
             width={3544}
             height={4500}
             priority
-            sizes="(max-width: 640px) 28vw, 13vw"
-            className="intro-star-left absolute top-0 left-0 w-[28cqw] sm:w-[13cqw] h-auto pointer-events-none select-none"
+            sizes="(max-aspect-ratio: 4/5) 28vw, 13vw"
+            className="intro-star-left absolute top-0 left-0 wide:w-[13cqw] tall:w-[28cqw] h-auto pointer-events-none select-none"
           />
 
           {/* Chrome star, top-right corner */}
@@ -134,8 +138,8 @@ export default function Landing() {
             width={3544}
             height={4500}
             priority
-            sizes="(max-width: 640px) 28vw, 13vw"
-            className="intro-star-right absolute top-0 right-0 w-[28cqw] sm:w-[13cqw] h-auto pointer-events-none select-none"
+            sizes="(max-aspect-ratio: 4/5) 28vw, 13vw"
+            className="intro-star-right absolute top-0 right-0 wide:w-[13cqw] tall:w-[28cqw] h-auto pointer-events-none select-none"
           />
 
           {/* "20 26" year, centred just below the stars */}
@@ -145,19 +149,19 @@ export default function Landing() {
             width={18440}
             height={4172}
             priority
-            sizes="50vw"
-            className="intro-logo absolute left-1/2 -translate-x-1/2 top-[6cqw] w-[50cqw] h-auto pointer-events-none select-none"
+            sizes="(max-aspect-ratio: 4/5) 78vw, 50vw"
+            className="intro-logo absolute left-1/2 -translate-x-1/2 wide:top-[6cqw] wide:w-[50cqw] tall:top-[9%] tall:w-[78cqw] h-auto pointer-events-none select-none"
           />
 
           {/* Slide A: the Bazaar poster */}
           <div className="hero-slide hero-slide-a absolute inset-0">
             {/* Title, below the logo */}
-            <h1 className="intro-title absolute left-1/2 -translate-x-1/2 top-[22cqw] text-center text-white uppercase whitespace-nowrap leading-none">
-              <span className="block font-['Helvetica_Neue',Helvetica,Arial,sans-serif] font-bold text-[7.9cqw] tracking-[-0.01em]">
+            <h1 className="intro-title absolute left-1/2 -translate-x-1/2 wide:top-[22cqw] tall:top-[var(--tt)] text-center text-white uppercase whitespace-nowrap leading-none">
+              <span className="block font-['Helvetica_Neue',Helvetica,Arial,sans-serif] font-bold wide:text-[7.9cqw] tall:text-[11.1cqw] tracking-[-0.01em]">
                 The Upcycling
               </span>
               <span
-                className={`${rubik.className} block text-[14.7cqw] leading-[0.85]`}
+                className={`${rubik.className} block wide:text-[14.7cqw] tall:text-[20.7cqw] leading-[0.85]`}
               >
                 Bazaar
               </span>
@@ -170,35 +174,35 @@ export default function Landing() {
               width={5625}
               height={4500}
               priority
-              sizes="70vw"
-              className="intro-model absolute left-[calc(50%-34cqw)] top-[32.7cqw] w-[69cqw] h-auto pointer-events-none select-none"
+              sizes="(max-aspect-ratio: 4/5) 150vw, 70vw"
+              className="intro-model absolute wide:left-[calc(50%-34cqw)] wide:top-[32.7cqw] wide:w-[69cqw] tall:left-[calc(50%-74cqw)] tall:top-[calc(var(--tt)_+_12.6cqw)] tall:w-[150cqw] tall:max-w-none h-auto pointer-events-none select-none"
             />
           </div>
 
           {/* Slide B: new location and tickets, revealed once by a light transition (lx-* in globals.css) */}
           <div className="hero-slide hero-slide-b absolute inset-0">
-            <p className="lx-tag absolute left-1/2 top-[18.4cqw] w-full flex flex-col items-center -translate-x-1/2 text-[#0B0B0B] font-['Helvetica_Neue',Helvetica,Arial,sans-serif] leading-none">
-              <span className="inline-block -rotate-[1.5deg] bg-[#63DE9F] px-[0.8cqw] py-[0.25cqw] text-[1.7cqw] uppercase">
+            <p className="lx-tag absolute left-1/2 wide:top-[18.4cqw] tall:top-[var(--bt)] w-full flex flex-col items-center -translate-x-1/2 text-[#0B0B0B] font-['Helvetica_Neue',Helvetica,Arial,sans-serif] leading-none">
+              <span className="inline-block -rotate-[1.5deg] bg-[#63DE9F] wide:px-[0.8cqw] wide:py-[0.25cqw] wide:text-[1.7cqw] tall:px-[1.6cqw] tall:py-[0.5cqw] tall:text-[3.4cqw] uppercase">
                 Happening at the
               </span>
-              <span className="-mt-[0.2cqw] inline-block -rotate-[2deg] bg-[#63DE9F] px-[1cqw] py-[0.35cqw] text-[3.3cqw] font-bold italic uppercase">
+              <span className="-mt-[0.2cqw] inline-block -rotate-[2deg] bg-[#63DE9F] wide:px-[1cqw] wide:py-[0.35cqw] wide:text-[3.3cqw] tall:px-[2cqw] tall:py-[0.7cqw] tall:text-[6.6cqw] font-bold italic uppercase">
                 New Location
               </span>
             </p>
 
-            <h2 className="lx-title absolute left-1/2 top-[23.4cqw] -translate-x-1/2 text-center text-white uppercase whitespace-nowrap leading-none">
-              <span className="lx-untamed lx-sweep block font-['Helvetica_Neue',Helvetica,Arial,sans-serif] font-bold text-[10.4cqw] tracking-[-0.02em] leading-[0.8]">
+            <h2 className="lx-title absolute left-1/2 wide:top-[23.4cqw] tall:top-[calc(var(--bt)_+_10.4cqw)] -translate-x-1/2 text-center text-white uppercase whitespace-nowrap leading-none">
+              <span className="lx-untamed lx-sweep block font-['Helvetica_Neue',Helvetica,Arial,sans-serif] font-bold wide:text-[10.4cqw] tall:text-[17.8cqw] tracking-[-0.02em] leading-[0.8]">
                 Untamed
               </span>
               <span
-                className={`${rubik.className} lx-empire lx-sweep block mt-[1.1cqw] text-[12.9cqw] leading-[0.8]`}
+                className={`${rubik.className} lx-empire lx-sweep block wide:mt-[1.1cqw] wide:text-[12.9cqw] tall:mt-[1.9cqw] tall:text-[22.1cqw] leading-[0.8]`}
               >
                 Empire
               </span>
             </h2>
 
             <p
-              className={`${archivoBlack.className} lx-pill absolute left-[calc(50%-43cqw)] top-[48.9cqw] flex items-center justify-center w-[20cqw] h-[9.2cqw] rounded-[50%] bg-[#111418] text-center text-white uppercase text-[2.9cqw] leading-[0.95]`}
+              className={`${archivoBlack.className} lx-pill absolute wide:left-[calc(50%-43cqw)] wide:top-[48.9cqw] wide:w-[20cqw] wide:h-[9.2cqw] wide:text-[2.9cqw] tall:left-[calc(50%-44cqw)] tall:top-[calc(var(--bt)_+_52cqw)] tall:w-[40cqw] tall:h-[16cqw] tall:text-[5.4cqw] flex items-center justify-center rounded-[50%] bg-[#111418] text-center text-white uppercase leading-[0.95]`}
             >
               25th
               <br />
@@ -209,13 +213,13 @@ export default function Landing() {
               href={TICKETS_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="lx-cta absolute left-1/2 top-[48.9cqw] sm:top-[50.9cqw] -translate-x-1/2 flex items-center justify-center w-[42cqw] sm:w-[37.5cqw] h-[9cqw] sm:h-[4.9cqw] rounded-[1.6cqw] sm:rounded-[1cqw] border border-[#E9C3A8] bg-white font-['Avenir_Next',Avenir,'Helvetica_Neue',Helvetica,Arial,sans-serif] font-semibold text-[3.6cqw] sm:text-[2.4cqw] text-[#E07B36] transition-colors duration-200 hover:bg-[#FFF3EA] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+              className="lx-cta absolute left-1/2 wide:top-[50.9cqw] wide:w-[37.5cqw] wide:h-[4.9cqw] wide:rounded-[1cqw] tall:top-[calc(var(--bt)_+_73cqw)] tall:w-[88cqw] tall:h-[14cqw] tall:rounded-[3cqw] -translate-x-1/2 flex items-center justify-center border border-[#E9C3A8] bg-white font-['Avenir_Next',Avenir,'Helvetica_Neue',Helvetica,Arial,sans-serif] font-semibold wide:text-[2.4cqw] tall:text-[6cqw] text-[#E07B36] transition-colors duration-200 hover:bg-[#FFF3EA] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
             >
               Buy Ticket
             </a>
 
             <p
-              className={`${archivoBlack.className} lx-pill absolute right-[calc(50%-43cqw)] top-[48.9cqw] flex items-center justify-center w-[20cqw] h-[9.2cqw] rounded-[50%] bg-[#111418] text-center text-white uppercase text-[2.9cqw] leading-[0.95]`}
+              className={`${archivoBlack.className} lx-pill absolute wide:right-[calc(50%-43cqw)] wide:top-[48.9cqw] wide:w-[20cqw] wide:h-[9.2cqw] wide:text-[2.9cqw] tall:right-[calc(50%-44cqw)] tall:top-[calc(var(--bt)_+_52cqw)] tall:w-[40cqw] tall:h-[16cqw] tall:text-[5.4cqw] flex items-center justify-center rounded-[50%] bg-[#111418] text-center text-white uppercase leading-[0.95]`}
             >
               Sun
               <br />
@@ -230,7 +234,7 @@ export default function Landing() {
               aria-hidden="true"
               className="lx-blade absolute left-[34%] right-0 top-[44%] h-[13%]"
             >
-              <span className="absolute right-[7%] bottom-[12%] font-['Helvetica_Neue',Helvetica,Arial,sans-serif] text-[2.2cqw] font-bold italic uppercase text-[#0B0B0B]">
+              <span className="absolute right-[7%] bottom-[12%] font-['Helvetica_Neue',Helvetica,Arial,sans-serif] font-bold italic uppercase text-[#0B0B0B] wide:text-[2.2cqw] tall:text-[4cqw]">
                 New Location
               </span>
             </div>
@@ -246,7 +250,7 @@ export default function Landing() {
             />
             <div
               aria-hidden="true"
-              className="lx-bar absolute left-1/2 top-[40%] w-[28cqw] h-[3.2cqw] -translate-x-1/2"
+              className="lx-bar absolute left-1/2 wide:top-[40%] wide:w-[28cqw] wide:h-[3.2cqw] tall:top-[calc(var(--bt)_+_14cqw)] tall:w-[60cqw] tall:h-[5cqw] -translate-x-1/2"
             />
           </div>
 
@@ -257,8 +261,8 @@ export default function Landing() {
             width={19422}
             height={5321}
             priority
-            sizes="117vw"
-            className="intro-owo absolute left-1/2 -translate-x-1/2 top-[60.7cqw] w-[max(117cqw,100vw)] max-w-none h-auto pointer-events-none select-none"
+            sizes="(max-aspect-ratio: 4/5) 160vw, 117vw"
+            className="intro-owo absolute left-1/2 -translate-x-1/2 wide:top-[60.7cqw] wide:w-[max(117cqw,100vw)] tall:top-[calc(100%_-_15cqw)] tall:w-[160cqw] tall:[--owo-lift:calc(1.9cqw_-_91svh)] tall:[--owo-scale:0.56] max-w-none h-auto pointer-events-none select-none"
           />
         </div>
       </HeroReveal>
