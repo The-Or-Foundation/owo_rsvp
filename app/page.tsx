@@ -175,7 +175,7 @@ export default function Landing() {
               height={4500}
               priority
               sizes="(max-aspect-ratio: 4/5) 150vw, 70vw"
-              className="intro-model absolute wide:left-[calc(50%-34cqw)] wide:top-[32.7cqw] wide:w-[69cqw] tall:left-[calc(50%-74cqw)] tall:top-[calc(var(--tt)_+_12.6cqw)] tall:w-[150cqw] tall:max-w-none h-auto pointer-events-none select-none"
+              className="intro-model absolute wide:left-[calc(50%-34cqw)] wide:top-[32.7cqw] wide:w-[69cqw] tall:left-[calc(50%-79cqw)] tall:top-[calc(var(--tt)_+_12.6cqw)] tall:w-[160cqw] tall:max-w-none h-auto pointer-events-none select-none"
             />
           </div>
 
