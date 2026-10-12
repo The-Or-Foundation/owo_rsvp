@@ -60,6 +60,10 @@ export default function RSVPCard() {
     const newErrors: { [key: string]: boolean } = {};
     if (!formData.firstName.trim()) newErrors.firstName = true;
     if (!formData.lastName.trim()) newErrors.lastName = true;
+    // Email is optional, but if given it should look like one
+    const email = formData.email.trim();
+    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
+      newErrors.email = true;
 
     setErrors(newErrors);
 
@@ -67,6 +71,7 @@ export default function RSVPCard() {
       const firstMissing = Object.keys(newErrors)[0];
       if (firstMissing === "firstName") firstNameRef.current?.focus();
       if (firstMissing === "lastName") lastNameRef.current?.focus();
+      if (firstMissing === "email") emailRef.current?.focus();
       toast.error("Please fill the required fields.");
       setLoading(false);
       return;
@@ -86,7 +91,7 @@ export default function RSVPCard() {
         return;
       }
 
-      toast.success("RSVP Successful 🎉 — Thanks for confirming!");
+      toast.success("RSVP Successful 🎉 — You're on the list!");
       setSuccess(true);
 
       setFormData({
@@ -141,8 +146,8 @@ export default function RSVPCard() {
                 </span>
               </h2>
               <p className="mt-4 text-lg text-black max-w-md">
-                Thank you for confirming your attendance! <br />
-                We’ve sent the event details to your email.
+                You&apos;re on the list! <br />
+                We&apos;ll be in touch with your free ticket voucher.
               </p>
             </div>
           ) : (
@@ -228,7 +233,9 @@ export default function RSVPCard() {
                     id="email"
                     type="email"
                     ref={emailRef}
-                    className={`${baseInputClasses} border-gray-300`}
+                    className={`${baseInputClasses} ${
+                      errors.email ? "border-red-500" : "border-gray-300"
+                    }`}
                     value={formData.email}
                     placeholder={
                       hoveredInput === "email" ? "" : "Enter your email"
@@ -240,6 +247,11 @@ export default function RSVPCard() {
                     }}
                     onMouseLeave={() => setHoveredInput("")}
                   />
+                  {errors.email && (
+                    <p className="text-red-500 text-xs mt-1">
+                      Please check your email address.
+                    </p>
+                  )}
                 </div>
                 <div>
                   <Label
@@ -307,6 +319,8 @@ export default function RSVPCard() {
           )}
         </CardContent>
 
+        {/* The corner skater now sits with the event details on the RSVP page (app/rsvp/page.tsx) */}
+        {/* Previous corner image:
         <div
           className={
             isMobile
@@ -322,7 +336,7 @@ export default function RSVPCard() {
             priority
             className="object-contain"
           />
-        </div>
+        </div> */}
       </Card>
     </div>
   );

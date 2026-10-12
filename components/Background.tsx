@@ -10,6 +10,13 @@ export default function Background() {
   // makes the old colours flash through when the page bounces on scroll.
   if (pathname === "/" || pathname?.startsWith("/landing")) return null;
 
+  // The RSVP page uses the 2026 green-to-orange gradient
+  if (pathname?.startsWith("/rsvp")) {
+    return (
+      <div className="fixed top-0 left-0 w-full h-full bg-[#F5473A] bg-[url('/owo_rsvp_bg.jpg')] bg-no-repeat bg-cover bg-center -z-10"></div>
+    );
+  }
+
   return (
     <div className="fixed top-0 left-0 w-full h-full bg-[#24f1af] bg-[url('/owo_waves.png')] bg-no-repeat bg-cover bg-center -z-10"></div>
   );
