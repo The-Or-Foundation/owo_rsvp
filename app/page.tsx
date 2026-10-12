@@ -3,6 +3,7 @@ import Image from "next/image";
 import SplashScreen from "@/components/SplashScreen";
 import HeroReveal from "@/components/HeroReveal";
 import StickyTicket from "@/components/StickyTicket";
+import PastActivities from "@/components/PastActivities";
 import { Archivo_Black, Rubik } from "next/font/google";
 
 const rubik = Rubik({
@@ -17,6 +18,8 @@ const archivoBlack = Archivo_Black({
   subsets: ["latin"],
 });
 
+// day is when each activity happens; once it's over the card shows as done
+// (see PastActivities).
 // Icon placement is measured from the design, as a share of the card:
 // left and width are % of the card's width, bottom is % of its height
 // (negative pokes out below the card)
@@ -24,6 +27,7 @@ const ACTIVITIES = [
   {
     name: ["Kayayei", "Night"],
     date: ["Saturday", "Oct 3rd"],
+    day: "2026-10-03",
     icon: {
       src: "/activity-icons/kayayei-night.png",
       width: 869,
@@ -36,6 +40,7 @@ const ACTIVITIES = [
   {
     name: ["OWO Block", "Party"],
     date: ["Sunday", "Oct 4th"],
+    day: "2026-10-04",
     icon: {
       src: "/activity-icons/block-party.png",
       width: 900,
@@ -48,6 +53,7 @@ const ACTIVITIES = [
   {
     name: ["OWO×Tide Turners", "Beach Cleanup"],
     date: ["Saturday", "Oct 10th"],
+    day: "2026-10-10",
     icon: {
       src: "/activity-icons/beach-cleanup.png",
       width: 900,
@@ -60,6 +66,7 @@ const ACTIVITIES = [
   {
     name: ["Shop for", "OWO-Day"],
     date: ["Sunday", "Oct 11th"],
+    day: "2026-10-11",
     icon: {
       src: "/activity-icons/shop-for-owo-day.png",
       width: 807,
@@ -72,6 +79,7 @@ const ACTIVITIES = [
   {
     name: ["OWO×Kanta", "Health Walk"],
     date: ["Sunday", "Oct 18th"],
+    day: "2026-10-18",
     icon: {
       src: "/activity-icons/health-walk.png",
       width: 393,
@@ -84,6 +92,7 @@ const ACTIVITIES = [
   {
     name: ["OWO Circle Talk:", "Remade in Ghana"],
     date: ["Saturday", "Oct 24th"],
+    day: "2026-10-24",
     icon: {
       src: "/activity-icons/circle-talk.png",
       width: 760,
@@ -108,6 +117,7 @@ export default function Landing() {
   return (
     <main className="min-h-[100svh] w-full bg-white">
       <SplashScreen />
+      <PastActivities />
       <StickyTicket href={TICKETS_URL} />
 
       {/* Hero poster: everything is sized in vw so it keeps the design's proportions */}
@@ -330,15 +340,16 @@ export default function Landing() {
           {ACTIVITIES.map((activity) => (
             <li
               key={activity.name.join(" ")}
-              className="relative flex items-center justify-between h-[15vw] sm:h-[6.8vw] px-[3.5vw] sm:px-[1.6vw]"
+              data-day={activity.day}
+              className="group relative flex items-center justify-between h-[15vw] sm:h-[6.8vw] px-[3.5vw] sm:px-[1.6vw]"
             >
               {/* Card background is clipped to the rounded corners; the icon is not */}
-              <div className="absolute inset-0 rounded-[2.6vw] sm:rounded-[1.2vw] overflow-hidden bg-[#111418]">
+              <div className="absolute inset-0 rounded-[2.6vw] sm:rounded-[1.2vw] overflow-hidden bg-[#111418] group-data-[past]:grayscale group-data-[past]:brightness-[0.6]">
                 <div
                   className={`absolute inset-y-0 left-0 w-[58%] ${CARD_ORANGE}`}
                 />
               </div>
-              <p className="relative text-[3.2vw] sm:text-[1.45vw] leading-[1]">
+              <p className="relative text-[3.2vw] sm:text-[1.45vw] leading-[1] group-data-[past]:text-white/75">
                 {activity.name[0]}
                 <br />
                 {activity.name[1]}
@@ -349,18 +360,23 @@ export default function Landing() {
                 width={activity.icon.width}
                 height={activity.icon.height}
                 sizes="(max-width: 640px) 22vw, 10vw"
-                className="activity-icon absolute h-auto select-none"
+                className="activity-icon absolute h-auto select-none group-data-[past]:grayscale group-data-[past]:opacity-60"
                 style={{
                   left: `${activity.icon.left}%`,
                   bottom: `${activity.icon.bottom}%`,
                   width: `${activity.icon.size}%`,
                 }}
               />
-              <p className="relative text-right text-[3.5vw] sm:text-[1.55vw] leading-[0.95]">
+              <p className="relative text-right text-[3.5vw] sm:text-[1.55vw] leading-[0.95] group-data-[past]:text-white/75">
                 {activity.date[0]}
                 <br />
                 {activity.date[1]}
               </p>
+
+              {/* Shown once the day is over */}
+              <span className="hidden group-data-[past]:inline-flex absolute z-10 -top-[2.2vw] sm:-top-[1vw] left-[2.5vw] sm:left-[1.1vw] -rotate-[4deg] items-center gap-[0.6em] bg-[#63DE9F] px-[0.7em] py-[0.3em] font-['Helvetica_Neue',Helvetica,Arial,sans-serif] font-bold italic text-[#0B0B0B] text-[2.8vw] sm:text-[1vw] leading-none shadow-md">
+                <span aria-hidden="true">✓</span> Done
+              </span>
             </li>
           ))}
         </ul>
