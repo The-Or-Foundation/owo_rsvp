@@ -329,6 +329,30 @@ html[data-intro="play"] .lx-hint {
 html[data-intro="play"] .lx-hint-fill {
   animation: lx-hint-fill 1800ms linear 2700ms forwards;
 }
+/* Arrow at the bottom of the hero pointing down to the activities */
+.scroll-arrow {
+  animation: scroll-arrow 1.6s ease-in-out infinite;
+}
+@keyframes scroll-arrow {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(28%);
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scroll-arrow {
+    animation: none;
+  }
+}
+
 @keyframes lx-hint-in {
   from {
     opacity: 0;

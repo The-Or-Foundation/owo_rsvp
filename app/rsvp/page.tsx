@@ -17,7 +17,28 @@ export const metadata: Metadata = {
 // RSVPs are saved to a Google Sheet (app/api/rsvp/route.ts)
 export default function RSVP() {
   return (
-    <div className="min-h-screen p-4 pb-16 flex flex-col items-center">
+    <div className="relative min-h-screen p-4 pb-16 flex flex-col items-center">
+      {/* Chrome stars in the top corners, sized like the landing page's
+          (13% of its poster width; bigger on tall screens), behind the form */}
+      <Image
+        src="/owo_wooo.png"
+        alt=""
+        width={3544}
+        height={4500}
+        priority
+        sizes="(max-aspect-ratio: 4/5) 28vw, 13vw"
+        className="absolute top-0 left-0 wide:w-[min(13vw,18.3svh)] tall:w-[28vw] h-auto pointer-events-none select-none"
+      />
+      <Image
+        src="/owo_wooo_2.png"
+        alt=""
+        width={3544}
+        height={4500}
+        priority
+        sizes="(max-aspect-ratio: 4/5) 28vw, 13vw"
+        className="absolute top-0 right-0 wide:w-[min(13vw,18.3svh)] tall:w-[28vw] h-auto pointer-events-none select-none"
+      />
+
       <RSVPCard />
 
       {/* Event details, the same width as the form card above. The skater

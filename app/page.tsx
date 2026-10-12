@@ -284,12 +284,36 @@ export default function Landing() {
             sizes="(max-aspect-ratio: 4/5) 160vw, 117vw"
             className="intro-owo absolute left-1/2 -translate-x-1/2 wide:top-[60.7cqw] wide:w-[max(117cqw,100vw)] tall:top-[calc(100%_-_15cqw)] tall:w-[160cqw] tall:[--owo-lift:calc(1.9cqw_-_91svh)] tall:[--owo-scale:0.56] max-w-none h-auto pointer-events-none select-none"
           />
+
+          {/* Bouncing arrow over the chrome OWO, down to the activities.
+              The outer link fades in with the intro, the inner arrow bounces. */}
+          <a
+            href="#activities"
+            aria-label="Scroll down to the activities line-up"
+            className="intro-rest absolute z-20 left-1/2 -translate-x-1/2 wide:bottom-[2.2cqw] tall:bottom-[5cqw] rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+          >
+            <span className="scroll-arrow flex items-center justify-center rounded-full bg-white text-[#E07B36] shadow-[0_6px_20px_rgba(0,0,0,0.3)] wide:size-[max(2.75rem,4cqw)] tall:size-[12cqw]">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={3}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+                className="w-1/2 h-1/2"
+              >
+                <path d="M12 5v14M5 12l7 7 7-7" />
+              </svg>
+            </span>
+          </a>
         </div>
       </HeroReveal>
 
       {/* Activities line-up. Phones get a single column, so sizes there are scaled up */}
       <section
-        className={`${archivoBlack.className} intro-rest uppercase text-white px-[6vw] sm:px-[8.75vw] pt-[8vw] sm:pt-[5.2vw] pb-[12vw] sm:pb-[8vw]`}
+        id="activities"
+        className={`${archivoBlack.className} intro-rest scroll-mt-4 uppercase text-white px-[6vw] sm:px-[8.75vw] pt-[8vw] sm:pt-[5.2vw] pb-[12vw] sm:pb-[8vw]`}
       >
         <h2 className="flex justify-center">
           <Image
