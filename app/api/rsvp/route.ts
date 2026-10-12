@@ -7,6 +7,11 @@ const sheetSecret = process.env.RSVP_SHEET_SECRET;
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+// Google's script can be slow (2-4s just to answer, more when it writes).
+// Stop waiting before the hosting time limit; by then Google has the RSVP
+// and finishes saving it even though we've stopped listening.
+const SHEET_TIMEOUT_MS = 8000;
+
 export async function POST(request: Request) {
   if (!sheetUrl || !sheetSecret) {
     console.error("❌ RSVP_SHEET_URL and RSVP_SHEET_SECRET must be set");
@@ -33,18 +38,29 @@ export async function POST(request: Request) {
       );
     }
 
-    const res = await fetch(sheetUrl, {
-      method: "POST",
-      headers: { "Content-Type": "text/plain;charset=utf-8" },
-      body: JSON.stringify({
-        secret: sheetSecret,
-        firstName: firstName.trim(),
-        lastName: lastName.trim(),
-        email: email?.trim() || "",
-        phone: phone?.trim() || "",
-      }),
-    });
-    const result = await res.json().catch(() => null);
+    let res: Response;
+    let result: { ok?: boolean; duplicate?: boolean } | null;
+    try {
+      res = await fetch(sheetUrl, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify({
+          secret: sheetSecret,
+          firstName: firstName.trim(),
+          lastName: lastName.trim(),
+          email: email?.trim() || "",
+          phone: phone?.trim() || "",
+        }),
+        signal: AbortSignal.timeout(SHEET_TIMEOUT_MS),
+      });
+      result = await res.json().catch(() => null);
+    } catch (error: any) {
+      if (error?.name === "TimeoutError") {
+        console.warn("⏱️ Google Sheet slow to answer; RSVP assumed saved");
+        return NextResponse.json({ message: "RSVP received" });
+      }
+      throw error;
+    }
 
     if (!res.ok || !result?.ok) {
       console.error("❌ Google Sheet error:", res.status, result);

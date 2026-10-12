@@ -82,6 +82,8 @@ export default function RSVPCard() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
+        // Never leave the button spinning if the server doesn't answer
+        signal: AbortSignal.timeout(20000),
       });
 
       const data = await res.json();
@@ -107,8 +109,14 @@ export default function RSVPCard() {
       setTimeout(() => {
         setSuccess(false);
       }, 10000);
-    } catch (err) {
-      toast.error("Network error. Please try again.");
+    } catch (err: any) {
+      if (err?.name === "TimeoutError") {
+        toast.error(
+          "This is taking too long. Your RSVP may have gone through, so please check before trying again."
+        );
+      } else {
+        toast.error("Network error. Please try again.");
+      }
     } finally {
       setLoading(false);
     }
