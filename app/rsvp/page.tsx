@@ -149,10 +149,6 @@ export default function RSVP() {
                 />
                 <p className="leading-snug">
                   by <span className="font-bold text-[#111418]">The Or Foundation</span>
-                  <br />
-                  <span className="text-sm text-[#5A5A5A]">
-                    in partnership with the UNIDO Textile Remanufacturing Program
-                  </span>
                 </p>
               </div>
 
